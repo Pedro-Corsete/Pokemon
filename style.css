@@ -1,0 +1,6 @@
+.grid{
+   display: flex;
+   text-align: center;
+   grid-template-rows: auto;
+
+}
