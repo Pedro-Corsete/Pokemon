@@ -1,83 +1,77 @@
-const input = document.getElementById("input-user");
-const imgPokemon = document.getElementById("img-pokemon");
-const namePokemon = document.getElementById("name-pokemon");
-const grid = document.getElementById("grid");
 
-let pokeList = [];
+const input = document.getElementById('input-user');
+const imgPokemon = document.getElementById('img-pokemon');
+const namePokemon = document.getElementById('name-pokemon');
+const grid = document.getElementById('grid');
 
-input.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
+let pokemonList = [];
+
+
+
+input .addEventListener('keydown', function(event) {
+    if(event.key == 'Enter'){
         getPokemon();
     }
 });
 
-async function getPokemon() {
-    const pokemonName = input.value.toLowerCase().trim();
-    
-    if (!pokemonName) return;
-
+async function getPokemon() { 
+    const pokemonName = input.value;
     let exists = checkPokemon(pokemonName);
-    if (exists) {
-        alert("Este Pokémon já foi buscado!");
+    if(exists == true){
         return;
     }
 
-    try {
-        const response = await fetch(
-            "https://pokeapi.co/api/v2/pokemon/" + pokemonName
-        );
-        
-        if (!response.ok) {
-            throw new Error("Pokémon não encontrado");
-        }
-
+    try{
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonName);
         const data = await response.json();
-
-        addToPokeList(data);
-        
+        savePokemon(data);
         show(data);
-
-    } catch (error) {
+    }catch(error){
         console.log(error);
-        alert("Pokémon não encontrado.");
+        console.error('Error fetching Pokémon data:', error);
     }
 }
 
-function addToPokeList(data) {
-    let newPokemonObj = {
-        id: data.id,
-        name: data.name,
-        img_front: data.sprites.front_default,
-        img_back: data.sprites.back_default,
-    };
-    pokeList.push(newPokemonObj);
-    console.log(pokeList);
+function show(){
+//    for(pokemon of pokemonList){
+//       createCard(pokemon);
+//   }
+    createCard(pokemonList[pokemonList.length - 1]);
 }
 
-function checkPokemon(pokemonName) {
-    for (let pokemon of pokeList) {
-        if (pokemonName == pokemon.id || pokemonName == pokemon.name) {
+function savePokemon(data){
+    let newPokemon = {
+    id: data.id,
+    nome: data.name,
+    img_front: data.sprites.front_default,
+    img_back: data.sprites.back_default,
+}
+    pokemonList.push(newPokemon);
+    console.log(pokemonList);
+}
+
+function checkPokemon(pokemonName){
+    for(pokemon of pokemonList){
+        if(pokemonName == pokemon.id || pokemonName == pokemon.nome){
             return true;
         }
     }
     return false;
 }
 
-function show() {
-    createCard(pokeList[pokeList.length -1]);
-}
-
 function createCard(pokemon){
-    const newText = document.createElement("p");
-    const newImg = document.createElement("img");
+    // Cria o texto e a imagem do Pokémon
+    const newText = document.createElement('p');
+    const newImg = document.createElement('img');
 
-    newText.textContent = pokemon.name;
-    newImg.src  = pokemon.img_front;
+    // Define o src da imagem e o  valor do texto do nome do Pokémon
+    newImg.src = pokemon.img_front;
+    newText.textContent = pokemon.nome;
 
-    const newDiv = document.createElement("div");
+    // Cria uma div e adiciona a imagem e o texto como filhos, inserindo dentro da div
+    const newDiv = document.createElement('div');
     newDiv.appendChild(newImg);
     newDiv.appendChild(newText);
-
-    newDiv.classList.add("card-pokemon");
+    newDiv.classList.add('card-pokemon');
     grid.appendChild(newDiv);
 }

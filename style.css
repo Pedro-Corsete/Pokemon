@@ -1,6 +1,58 @@
-.grid{
+
+.hidden {
+    display: none;
+}
+
+.background-img{
+   background: url(pokemon_pokeball-wallpaper-2560x1440.jpg) no-repeat center center fixed;
+   background-size: cover;
+   opacity: 90%;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: 150px 150px 150px 150px 150px 150px 150px 150px 150px;
+    text-align: center;
+    row-gap: 20px;
+}
+
+.card-pokemon {
+    
+    background: url(tigrinho.jpg) center;
+    width: 170px;
+    height: 170px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: transform 0.9 ease;
+}
+
+.input{
    display: flex;
    text-align: center;
-   grid-template-rows: auto;
+   border-radius: 20px;
+   width: 250px;
+   border: 2px solid;
+   font-size: 20px;
+   
+}
 
+.ficanomeio{
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   height: 40px;
+   
+}
+
+.logo{
+   display: flex;
+   color: rgb(246, 246, 248);
+   flex-direction: row;
+   justify-content: center;
+   font-size: 45px;
+}
+
+.card-pokemon:hover{
+   transform: translateY(-8px);
 }
